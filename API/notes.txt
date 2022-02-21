@@ -1,0 +1,4 @@
+﻿ISSUES
+-contructor with many parameters
+
+FRAMEWORKS/TOOLS
