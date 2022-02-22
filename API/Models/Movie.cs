@@ -6,7 +6,7 @@ namespace API.Models
     {
         public Movie(string title, int year, string[] gender, string[] country, Director director)
         {
-            Id = new Guid();
+            Id = Guid.NewGuid();
             Title = title;
             Year = year;
             Gender = gender;

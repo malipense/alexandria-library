@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using API.Models;
 using API.Services.Interfaces;
 
 namespace API.Services
 {
-    public class MoviesService : IMoviesService
+    public class MovieService : IMovieService
     {
         private List<Movie> _mockedMovies = new List<Movie> 
         {
@@ -16,12 +17,12 @@ namespace API.Services
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Movie> GetAll()
+        public Task<IEnumerable<Movie>> GetAll()
         {
-            return _mockedMovies;
+            return Task.FromResult((IEnumerable<Movie>)_mockedMovies);
         }
 
-        public IEnumerable<Movie> GetByFilter()
+        public Task<IEnumerable<Movie>> GetByFilter()
         {
             throw new NotImplementedException();
         }
