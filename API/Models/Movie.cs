@@ -1,4 +1,5 @@
-﻿using System;
+﻿using API.ViewModel;
+using System;
 
 namespace API.Models
 {
@@ -11,6 +12,15 @@ namespace API.Models
             Year = year;
             Gender = gender;
             Country = country;
+            Director = director;
+        }
+        public Movie(MovieViewModel viewModel, Director director)
+        {
+            Id = Guid.NewGuid();
+            Title = viewModel.Title;
+            Year = viewModel.Year;
+            Gender = viewModel.Gender;
+            Country = viewModel.Country;
             Director = director;
         }
         public Guid Id { get; private set; }

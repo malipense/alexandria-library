@@ -1,4 +1,5 @@
 ﻿ISSUES
 -contructor with many parameters
+-what response types to use
 
 FRAMEWORKS/TOOLS
