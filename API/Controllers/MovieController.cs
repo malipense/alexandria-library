@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using API.Services.Interfaces;
-using Microsoft.AspNetCore.Http;
 using OperationResults;
 using API.ViewModel;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
+using API.Models;
+using System.Net.Mime;
+using System.Collections.Generic;
 
 namespace API.Controllers
 {
@@ -24,35 +26,37 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> Get()
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(204)]
+        [ResponseCache(Duration = 43200)]
+        public async Task<ActionResult<IEnumerable<Movie>>> Get([FromQuery] int page = 1, int max = 20)
         {
-            var movieList = await _moviesService.GetAll();
+            var movieList = await _moviesService.GetAll(page, max);
             if (movieList.Count() > 0)
             {
-                return new OkObjectResult(movieList);
+                return movieList.ToList();
             }
-            return new NotFoundResult();
+            return NotFound();
         }
 
-        [HttpGet]
-        [Route("/filter")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> GetByFilter([FromQuery] string filter)
+        [HttpOptions]
+        [Consumes(MediaTypeNames.Application.Json)]
+        [Produces(MediaTypeNames.Application.Json)]
+        [ProducesResponseType(200)]
+        [ResponseCache(Duration = 3600)]
+        public async Task<IActionResult> Options()
         {
-            var movieList = await _moviesService.GetByFilter(filter);
-            if (movieList.Count() > 0)
-            {
-                return new OkObjectResult(movieList);
-            }
-            return new NotFoundResult();
+            string[] operations = { "GET", "POST" };
+            Response.Headers.Add("Allow", operations);
+            
+            return Ok();
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
         public async Task<IActionResult> Post(MovieViewModel viewModel)
         {
             var operationResult = await _moviesService.Add(viewModel);

@@ -47,33 +47,9 @@ namespace API.Services
             return Task.FromResult(result);
         }
 
-        public Task<IEnumerable<Movie>> GetAll()
+        public Task<IEnumerable<Movie>> GetAll(int page, int max)
         {
             return Task.FromResult((IEnumerable<Movie>)_mockedMovies);
-        }
-
-        public Task<IEnumerable<Movie>> GetByFilter(string filter)
-        {
-            IEnumerable<Movie> filteredMoviesList = null;
-
-            if (string.IsNullOrEmpty(filter))
-            {
-                filteredMoviesList = _mockedMovies;
-            }
-            else
-            {
-                string filterBy = filter.ToLower();
-
-                filteredMoviesList = _mockedMovies
-                .Where(w =>
-                    w.Title.ToLower().Contains(filterBy)
-                    || w.Year.ToString().ToLower().Contains(filterBy)
-                    || string.Join(";", w.Gender).ToLower().Contains(filterBy)
-                    || string.Join(";", w.Country).ToLower().Contains(filterBy)
-                    || w.Director.Name.ToLower().Contains(filterBy));
-            }
-            
-            return Task.FromResult((IEnumerable<Movie>)filteredMoviesList);
         }
 
         public Task<bool> Update(Guid movieId)

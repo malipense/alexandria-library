@@ -9,8 +9,7 @@ namespace API.Services.Interfaces
 {
     public interface IMovieService
     {
-        public Task<IEnumerable<Movie>> GetAll();
-        public Task<IEnumerable<Movie>> GetByFilter(string filter);
+        public Task<IEnumerable<Movie>> GetAll(int page, int max);
         public Task<OperationResult> Add(MovieViewModel movieViewModel);
         public Task<bool> Update(Guid movieId);
     }
