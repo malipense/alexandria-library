@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace API.ViewModel
 {
@@ -12,10 +13,15 @@ namespace API.ViewModel
             Country = country;
             DirectorId = directorId;
         }
+        [Required]
         public string Title { get; private set; }
+        [Required]
         public int Year { get; private set; }
+        [Required]
         public string[] Gender { get; private set; }
+        [Required]
         public string[] Country { get; private set; }
+        [Required]
         public Guid DirectorId { get; private set; }
     }
 }

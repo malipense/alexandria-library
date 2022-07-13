@@ -1,6 +1,7 @@
-﻿using API.ViewModel;
+﻿using API.lib;
+using API.ViewModel;
 using System;
-using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace API.Models
 {
@@ -25,13 +26,10 @@ namespace API.Models
             Director = director;
         }
         public Guid Id { get; private set; }
-        [Required]
         public string Title { get; private set; }
-        [Required]
         public int Year { get; private set; }
         public string[] Gender { get; private set; }
         public string[] Country { get; private set; }
-        [Required]
         public Director Director { get; private set; }
     }
 }

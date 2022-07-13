@@ -47,7 +47,7 @@ namespace API.Services
             return Task.FromResult(result);
         }
 
-        public Task<IEnumerable<Movie>> GetAll(int page, int max)
+        public Task<IEnumerable<Movie>> Get(int page, int max)
         {
             return Task.FromResult((IEnumerable<Movie>)_mockedMovies);
         }

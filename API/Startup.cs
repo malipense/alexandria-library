@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using API.Services.Interfaces;
 using API.Services;
 using Microsoft.OpenApi.Models;
+using Middleware;
 
 namespace API
 {
@@ -51,6 +52,11 @@ namespace API
                 app.UseSwaggerUI(options =>
                 {
                     options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+                });
+
+                app.UseCustomMiddleware(options =>
+                {
+                    options.SerializeAsV2 = true;
                 });
             }
 

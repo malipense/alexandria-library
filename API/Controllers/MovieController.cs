@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using API.Models;
 using System.Net.Mime;
 using System.Collections.Generic;
+using API.lib;
 
 namespace API.Controllers
 {
@@ -33,12 +34,14 @@ namespace API.Controllers
         [ResponseCache(Duration = 43200)]
         public async Task<ActionResult<IEnumerable<Movie>>> Get([FromQuery] int page = 1, int max = 20)
         {
-            var movieList = await _moviesService.GetAll(page, max);
-            if (movieList.Count() > 0)
+            var movieList = await _moviesService.Get(page, max);
+            if (movieList.Count() <= 0)
             {
-                return movieList.ToList();
+                return NotFound();
             }
-            return NotFound();
+
+            this.GenerateLinks();
+            return movieList.ToList();
         }
 
         [HttpOptions]
